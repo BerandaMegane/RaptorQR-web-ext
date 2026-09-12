@@ -1,0 +1,9 @@
+node_modules/
+dist/
+*.crx
+*.xpi
+*.pem
+*.key
+.env
+.env.*
+!.env.example

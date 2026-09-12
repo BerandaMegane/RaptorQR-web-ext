@@ -1,0 +1,12 @@
+{
+  "name": "raptorqr-web-ext",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prebuild": "node scripts/apply-raptorqr-extension-patch.mjs",
+    "build": "node scripts/build-extension.mjs",
+    "verify": "node scripts/verify-extension.mjs",
+    "package:firefox": "node scripts/package-xpi.mjs"
+  }
+}

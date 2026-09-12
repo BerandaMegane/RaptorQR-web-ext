@@ -1,0 +1,3 @@
+[submodule "vendor/RaptorQR"]
+	path = vendor/RaptorQR
+	url = https://github.com/infrost/RaptorQR

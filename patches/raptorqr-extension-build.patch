@@ -1,0 +1,138 @@
+diff --git a/apps/web/src/main.tsx b/apps/web/src/main.tsx
+index 9b1ea3b..4da8f0c 100644
+--- a/apps/web/src/main.tsx
++++ b/apps/web/src/main.tsx
+@@ -5,15 +5,13 @@ import { render } from 'preact';
+ import { useCallback, useEffect, useState } from 'preact/hooks';
+ import { App } from '@/app/app';
+ import { BootScreen } from '@/pwa/boot_screen';
+-import {
+-  preloadRuntimeAssets,
+-  registerServiceWorker,
+-  type PreloadProgress,
+-} from '@/pwa/preload';
++import type { PreloadProgress } from '@/pwa/preload';
+ 
+ const root = document.getElementById('root');
+ if (!root) throw new Error('Missing #root element');
+ 
++const isExtensionBuild = import.meta.env.VITE_EXTENSION_BUILD === 'true';
++
+ const initialProgress: PreloadProgress = {
+   completed: 0,
+   total: 0,
+@@ -31,10 +29,13 @@ function Root() {
+     setProgress(initialProgress);
+ 
+     try {
+-      await registerServiceWorker().catch((err: unknown) => {
+-        console.warn('Service worker registration failed:', err);
+-      });
+-      await preloadRuntimeAssets(setProgress);
++      if (!isExtensionBuild) {
++        const { preloadRuntimeAssets, registerServiceWorker } = await import('@/pwa/preload');
++        await registerServiceWorker().catch((err: unknown) => {
++          console.warn('Service worker registration failed:', err);
++        });
++        await preloadRuntimeAssets(setProgress);
++      }
+       setReady(true);
+     } catch (err: unknown) {
+       setError(err instanceof Error ? err.message : String(err));
+diff --git a/apps/web/src/pwa/preload.disabled.ts b/apps/web/src/pwa/preload.disabled.ts
+new file mode 100644
+index 0000000..a08cfd0
+--- /dev/null
++++ b/apps/web/src/pwa/preload.disabled.ts
+@@ -0,0 +1,11 @@
++export interface PreloadProgress {
++  completed: number;
++  total: number;
++  currentLabel: string;
++}
++
++export async function registerServiceWorker(): Promise<void> {}
++
++export async function preloadRuntimeAssets(
++  _onProgress: (progress: PreloadProgress) => void,
++): Promise<void> {}
+diff --git a/apps/web/vite.config.ts b/apps/web/vite.config.ts
+index 9dea7dc..b97e7c4 100644
+--- a/apps/web/vite.config.ts
++++ b/apps/web/vite.config.ts
+@@ -1,32 +1,48 @@
+-import { defineConfig } from 'vite';
++import { defineConfig, loadEnv } from 'vite';
+ import preact from '@preact/preset-vite';
+ import { resolve } from 'node:path';
+ 
+-export default defineConfig({
+-  plugins: [
+-    preact({
+-      resolveModuleFormat: false,
+-    }),
+-  ],
+-  resolve: {
+-    alias: {
+-      '@': resolve(__dirname, 'src'),
++export default defineConfig(({ mode }) => {
++  const isExtensionBuild = loadEnv(mode, process.cwd(), '').VITE_EXTENSION_BUILD === 'true';
++
++  return {
++    plugins: [
++      preact({
++        resolveModuleFormat: false,
++      }),
++      {
++        name: 'extension-build-without-pwa',
++        transformIndexHtml(html) {
++          if (!isExtensionBuild) return html;
++          return html.replace(/\s*<link rel="manifest" href="\.\/manifest\.webmanifest" \/>/, '');
++        },
++      },
++    ],
++    resolve: {
++      alias: {
++        '@/pwa/preload': resolve(
++          __dirname,
++          isExtensionBuild ? 'src/pwa/preload.disabled.ts' : 'src/pwa/preload.ts',
++        ),
++        '@': resolve(__dirname, 'src'),
++      },
++    },
++    test: {
++      environment: 'happy-dom',
++      include: ['src/tests/**/*.test.ts'],
++      setupFiles: ['src/tests/setup.ts'],
++    },
++    worker: {
++      format: 'es',
++    },
++    server: {
++      allowedHosts: ['dev.linkto.host'],
++    },
++    base: './',
++    publicDir: isExtensionBuild ? false : 'public',
++    build: {
++      outDir: 'dist',
++      emptyOutDir: true,
+     },
+-  },
+-  test: {
+-    environment: 'happy-dom',
+-    include: ['src/tests/**/*.test.ts'],
+-    setupFiles: ['src/tests/setup.ts'],
+-  },
+-  worker: {
+-    format: 'es',
+-  },
+-  server: {
+-    allowedHosts: ['dev.linkto.host'],
+-  },
+-  base: './',
+-  build: {
+-    outDir: 'dist',
+-    emptyOutDir: true,
+-  },
++  };
+ });
