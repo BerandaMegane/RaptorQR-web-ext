@@ -10,9 +10,11 @@
     "generate:icons": "node scripts/generate-icons.mjs",
     "build": "node scripts/build-extension.mjs",
     "verify": "node scripts/verify-extension.mjs",
+    "verify:chromium": "node scripts/verify-chromium-browsers.mjs",
     "package:firefox": "node scripts/package-xpi.mjs"
   },
   "devDependencies": {
+    "playwright-core": "^1.63.0",
     "sharp": "^0.35.4"
   }
 }

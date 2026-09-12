@@ -258,6 +258,8 @@ plan.md の 3.X に基づいて実装して。実装中に問題や疑問が発�
 4. ネットワークを遮断して同じ操作を実行し、外部通信なしで動作することを確認する。
 5. Edge で同じ Chromium 用成果物に対して 1〜4 を再実行する。
 
+stable 版の Chrome/Edge は、バージョンや組織設定によって command-line の `--load-extension` を受け付けないことがある。`pnpm verify:chromium` は、unpacked 拡張機能を読み込める開発用 Chromium を `CHROME_PATH` と `EDGE_PATH` で指定して、画面表示、worker/WASM、テキスト送信、ファイル送信、fake camera によるカメラ権限、オフライン送信、外部 HTTP(S) 通信なしを自動検証する。stable 版では `chrome://extensions` または `edge://extensions` の開発者モードから `dist/chromium` を手動で読み込み、同じ操作を確認する。
+
 完了条件: Chrome と Edge の両方で、RaptorQR の主要機能がオフラインで動作する。
 
 ### 3.8 Firefox 用成果物を検証・パッケージ化する
