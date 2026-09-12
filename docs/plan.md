@@ -227,9 +227,9 @@ plan.md の 3.X に基づいて実装して。実装中に問題や疑問が発�
 1. `extension/background.js` を作成し、`action.onClicked` で `runtime.getURL('app/index.html')` を新しいタブとして開く。
 2. `extension/manifest.base.json` を作成し、Manifest V3、action、background service worker、アイコンだけを共通設定として定義する。
 3. 必要サイズの PNG アイコンを生成する処理を追加する。
-4. まず Chromium 用 Manifest を生成し、Chrome で unpacked extension として読み込む。
+4. `manifest.base.json`、background、空の `app/index.html`、PNG アイコンを静的に検証する。`dist/chromium` を組み立てる 3.5 の完了後に、生成済みの Chromium 用 Manifest を Chrome で unpacked extension として読み込む。
 
-完了条件: アイコン操作で拡張機能内の空の `app/index.html` を新しいタブに開け、不要な権限を要求しない。
+完了条件: 共通 Manifest、background、空の `app/index.html`、PNG アイコンが揃い、background のアイコン押下処理が拡張機能内の `app/index.html` を開く。不要な権限を要求しない。Chrome への unpacked extension 読み込みは 3.5 の完了条件とする。
 
 ### 3.5 拡張機能の成果物を組み立てる
 
