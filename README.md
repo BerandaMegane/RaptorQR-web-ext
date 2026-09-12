@@ -107,7 +107,7 @@ RaptorQR Web Extension は、[RaptorQR](https://github.com/infrost/RaptorQR) を
 
 ### インストール方法（GitHub Releases からの導入）
 
-GitHub Releases から、利用するブラウザに応じた ZIP ファイルをダウンロードします。
+[GitHub Releases](https://github.com/BerandaMegane/RaptorQR-web-ext/releases) から、利用するブラウザに応じた ZIP ファイルをダウンロードします。
 
 #### Google Chrome / Microsoft Edge / Brave（Chromium 系ブラウザ）
 
