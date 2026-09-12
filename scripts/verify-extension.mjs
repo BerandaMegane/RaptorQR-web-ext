@@ -25,6 +25,10 @@ async function verifyTarget(target, targetDir) {
   requireValue(typeof manifest.version === 'string' && manifest.version.length > 0, `${target}: version is required.`);
   requireValue(typeof manifest.action?.default_title === 'string', `${target}: action.default_title is required.`);
   requireValue(manifest.background?.service_worker === 'background.js', `${target}: background service worker is invalid.`);
+  requireValue(
+    manifest.content_security_policy?.extension_pages === "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'",
+    `${target}: extension page CSP must allow only local scripts and WebAssembly compilation.`,
+  );
   requireValue(!('permissions' in manifest), `${target}: permissions must not be requested.`);
   requireValue(!('host_permissions' in manifest), `${target}: host_permissions must not be requested.`);
 

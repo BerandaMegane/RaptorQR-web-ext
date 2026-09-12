@@ -117,9 +117,12 @@ Manifest は Manifest V3 を基本とし、Chrome と Edge では共通の Chrom
 - 拡張機能名、バージョン、説明
 - `action.default_title`
 - `background.service_worker`
+- `content_security_policy.extension_pages: "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"`
 - 拡張機能アイコン
 
 RaptorQR は拡張機能ページ自身で動作するため、`activeTab`、`tabs`、`scripting`、`<all_urls>`、content scripts などの権限は原則として要求しない。実際に必要な権限が判明した場合だけ、最小限の権限を追加する。
+
+RaptorQR の WASM は拡張機能ページ内でコンパイルするため、CSP には `wasm-unsafe-eval` を追加する。任意の JavaScript 文字列評価を許可する `unsafe-eval` は使用しない。
 
 Firefox 用 Manifest には、署名済み Manifest V3 拡張機能に必要な Gecko 固有設定を追加する。
 
