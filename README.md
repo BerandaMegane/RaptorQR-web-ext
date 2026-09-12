@@ -15,6 +15,9 @@ interface in an extension tab for QR-based text and file transfer.
 This repository is an independent packaging project and is not affiliated with
 or endorsed by the RaptorQR project or its contributors.
 
+This extension was developed using generative AI. The implementation plan is
+documented in [docs/plan.md](docs/plan.md).
+
 ### Supported browsers
 
 - Google Chrome and Microsoft Edge: load `dist/chromium` as an unpacked
@@ -55,10 +58,6 @@ licensed under the [MIT License](LICENSE). RaptorQR and bundled dependencies
 remain under their own terms. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)
 and the `LICENSES/` directory included in each extension package.
 
-### Security
-
-See [SECURITY.md](SECURITY.md) for responsible vulnerability reporting.
-
 ---
 
 <a id="japanese"></a>
@@ -68,6 +67,8 @@ See [SECURITY.md](SECURITY.md) for responsible vulnerability reporting.
 RaptorQR Web Extension は、[RaptorQR](https://github.com/infrost/RaptorQR) をオフライン対応のブラウザ拡張機能としてパッケージ化したものです。拡張機能タブ内で RaptorQR インターフェースを開き、QR コードを使ったテキストやファイルの転送を行えます。
 
 本リポジトリは独立したパッケージングプロジェクトであり、RaptorQR プロジェクトまたはその貢献者と提携・推奨関係にあるものではありません。
+
+本拡張機能は生成AIを活用して開発されました。実装計画は [docs/plan.md](docs/plan.md) に記載されています。
 
 ### 対応ブラウザ
 
@@ -95,7 +96,3 @@ pnpm build
 ### ライセンスと告知
 
 拡張機能ラッパー、ビルドスクリプト、ドキュメント、独自アセットは [MIT License](LICENSE) の下でライセンスされています。RaptorQR および同梱される依存関係はそれぞれのライセンス条件に従います。[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) および各拡張機能パッケージに含まれる `LICENSES/` ディレクトリを参照してください。
-
-### セキュリティ
-
-脆弱性の責任ある報告については [SECURITY.md](SECURITY.md) を参照してください。
