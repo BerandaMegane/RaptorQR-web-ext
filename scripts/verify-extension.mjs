@@ -35,6 +35,8 @@ async function verifyTarget(target, targetDir) {
   requireFile(relativeFiles, 'LICENSES/Apache-2.0.txt', `${target}: Apache 2.0 license notice`);
   requireFile(relativeFiles, 'LICENSES/MIT-DEPENDENCIES.txt', `${target}: bundled MIT dependency notices`);
   requireFile(relativeFiles, 'LICENSES/fast_qr-MIT.txt', `${target}: fast_qr license notice`);
+  requireFile(relativeFiles, 'LICENSES/Zint-BSD-3-Clause.txt', `${target}: Zint BSD 3-Clause license notice`);
+  requireFile(relativeFiles, 'LICENSES/ZXing-WASM-NOTICE.txt', `${target}: ZXing WASM provenance notice`);
 
   for (const iconPath of Object.values(manifest.icons ?? {})) {
     requireValue(typeof iconPath === 'string', `${target}: icon path is invalid.`);

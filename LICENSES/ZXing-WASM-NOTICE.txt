@@ -1,0 +1,26 @@
+ZXing WASM provenance and notices
+
+The zxing_reader and zxing_writer WebAssembly files distributed with this
+extension originate from zxing-wasm 3.1.0:
+https://github.com/Sec-ant/zxing-wasm/tree/v3.1.0
+
+zxing-wasm 3.1.0 is the npm package locked by
+vendor/RaptorQR/pnpm-lock.yaml with integrity
+sha512-5+3V1wPRx4gvbeLH2jB7n2cKrYJ1q4i3QgjnBUtrDPeqxJSi6BdzKJg4y6aF6bgW8zfntnYJyrkqFMevDhL2NA==.
+Its MIT license is included in LICENSES/MIT-DEPENDENCIES.txt.
+
+The zxing-wasm 3.1.0 source tag pins ZXing-C++ at commit
+f5adf68706afd54e8e20ade3406d832e7ce72413:
+https://github.com/zxing-cpp/zxing-cpp/tree/f5adf68706afd54e8e20ade3406d832e7ce72413
+
+ZXing-C++ and zxing-wasm's src/cpp/ZXingWasm.cpp are licensed under Apache
+License 2.0. The complete license text is included in
+LICENSES/Apache-2.0.txt.
+
+That ZXing-C++ commit pins the Zint source at commit
+55541e139e62b9209b71cd9b0ba9010cec28b1d9 (Zint 2.16.0):
+https://github.com/zint/zint/tree/55541e139e62b9209b71cd9b0ba9010cec28b1d9
+
+The zxing-wasm writer build enables ZXing-C++'s bundled Zint backend. The
+Zint backend is licensed under the BSD 3-Clause License. The complete license
+text and required attribution are included in LICENSES/Zint-BSD-3-Clause.txt.

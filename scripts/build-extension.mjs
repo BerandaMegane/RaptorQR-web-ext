@@ -45,6 +45,8 @@ function verifyTarget(targetDir) {
     'LICENSES/Apache-2.0.txt',
     'LICENSES/MIT-DEPENDENCIES.txt',
     'LICENSES/fast_qr-MIT.txt',
+    'LICENSES/Zint-BSD-3-Clause.txt',
+    'LICENSES/ZXing-WASM-NOTICE.txt',
   ]) {
     if (!existsSync(resolve(targetDir, requiredPath))) {
       throw new Error(`Extension output is missing ${requiredPath}.`);
