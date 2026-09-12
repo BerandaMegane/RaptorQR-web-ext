@@ -4,6 +4,7 @@ import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildManifest } from './build-manifest.mjs';
+import { verifyExtensionOutputs } from './verify-extension.mjs';
 
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const upstreamDistDir = resolve(rootDir, 'vendor/RaptorQR/apps/web/dist');
@@ -25,6 +26,7 @@ for (const target of targets) {
   verifyTarget(targetDir);
 }
 
+await verifyExtensionOutputs();
 console.log('Built Chromium and Firefox extension directories.');
 
 function verifyTarget(targetDir) {
