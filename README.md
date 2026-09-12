@@ -20,11 +20,41 @@ documented in [docs/plan.md](docs/plan.md).
 
 ### Supported browsers
 
-- Google Chrome and Microsoft Edge: load `dist/chromium` as an unpacked
+- Google Chrome and Microsoft Edge: load [dist/chromium](dist/chromium) as an unpacked
 	extension during development. A CRX may be produced for controlled
 	environments where the browser policy allows it.
-- Mozilla Firefox: use `dist/firefox` as a temporary add-on during development.
+- Mozilla Firefox: use [dist/firefox](dist/firefox) as a temporary add-on during development.
 	Regular Firefox installations require an AMO-signed XPI for permanent use.
+
+### Installation (GitHub Releases)
+
+Download the release ZIP asset for your target browser from GitHub Releases.
+
+#### Google Chrome / Microsoft Edge / Brave (Chromium-based)
+
+1. Download the Chromium ZIP archive and extract it to a permanent local directory (do not delete or move this folder after installation, as the browser loads directly from it).
+2. Open the extensions page in your browser:
+   - Chrome: `chrome://extensions`
+   - Edge: `edge://extensions`
+   - Brave: `brave://extensions`
+3. Turn on **Developer mode** using the toggle switch (upper-right corner on Chrome/Brave, or left sidebar on Edge).
+4. Click **Load unpacked** and select the extracted directory containing [dist/chromium/manifest.json](dist/chromium/manifest.json).
+5. The RaptorQR icon will appear in the toolbar (pin it from the extensions menu if needed). Click the icon to launch RaptorQR in a new tab.
+
+#### Mozilla Firefox
+
+> **Note**: Due to Firefox's extension signing policy, unsigned add-ons loaded into standard Firefox releases are treated as temporary add-ons and will be unloaded when the browser restarts. For permanent installation without AMO signing, use Firefox Developer Edition, Nightly, or Firefox ESR with signature enforcement disabled.
+
+- **Temporary Installation (Standard Firefox)**:
+  1. Navigate to `about:debugging#/runtime/this-firefox` in the address bar.
+  2. Click **Load Temporary Add-on...**.
+  3. Select the downloaded Firefox ZIP archive (or extract it and select [dist/firefox/manifest.json](dist/firefox/manifest.json)).
+  4. Click the RaptorQR icon in the toolbar to launch.
+- **Permanent Installation (Firefox Developer Edition / Nightly / ESR)**:
+  1. Open `about:config` and set `xpinstall.signatures.required` to `false`.
+  2. Open `about:addons` (Add-ons Manager).
+  3. Click the gear icon at the top of the page and select **Install Add-on From File...**.
+  4. Select the downloaded Firefox ZIP archive (or change its file extension to `.xpi`).
 
 ### Build
 
@@ -72,8 +102,38 @@ RaptorQR Web Extension は、[RaptorQR](https://github.com/infrost/RaptorQR) を
 
 ### 対応ブラウザ
 
-- Google Chrome および Microsoft Edge: 開発時は `dist/chromium` をパッケージ化されていない拡張機能（unpacked extension）として読み込みます。ブラウザポリシーで許可されている制御環境向けに CRX を作成することも可能です。
-- Mozilla Firefox: 開発時は `dist/firefox` を一時的なアドオン（temporary add-on）として使用します。通常版 Firefox で恒久的に使用するには、AMO 署名済み XPI が必要です。
+- Google Chrome および Microsoft Edge: 開発時は [dist/chromium](dist/chromium) をパッケージ化されていない拡張機能（unpacked extension）として読み込みます。ブラウザポリシーで許可されている制御環境向けに CRX を作成することも可能です。
+- Mozilla Firefox: 開発時は [dist/firefox](dist/firefox) を一時的なアドオン（temporary add-on）として使用します。通常版 Firefox で恒久的に使用するには、AMO 署名済み XPI が必要です。
+
+### インストール方法（GitHub Releases からの導入）
+
+GitHub Releases から、利用するブラウザに応じた ZIP ファイルをダウンロードします。
+
+#### Google Chrome / Microsoft Edge / Brave（Chromium 系ブラウザ）
+
+1. Chromium 向けの ZIP アーカイブをダウンロードし、任意のローカルフォルダーに解凍します（ブラウザがこのフォルダーから直接読み込むため、インストール後もフォルダーを移動・削除しないでください）。
+2. 各ブラウザの拡張機能管理画面を開きます。
+   - Chrome: `chrome://extensions`
+   - Edge: `edge://extensions`
+   - Brave: `brave://extensions`
+3. 画面内の **「デベロッパー モード」**（Developer mode）をオンにします（Chrome / Brave は右上、Edge は左側メニュー）。
+4. **「パッケージ化されていない拡張機能を読み込む」**（Load unpacked）をクリックし、解凍したフォルダー（[dist/chromium/manifest.json](dist/chromium/manifest.json) が含まれるフォルダー）を選択します。
+5. ツールバーに RaptorQR アイコンが表示されます（必要に応じて拡張機能メニューからピン留めしてください）。アイコンをクリックすると新しいタブで RaptorQR が起動します。
+
+#### Mozilla Firefox
+
+> **注意**: 通常版 Firefox では拡張機能の署名が必須化されているため、未署名パッケージは「一時的なアドオン」として読み込まれ、ブラウザ再起動時にアンロードされます。未署名のまま恒久的にインストールしたい場合は、Firefox Developer Edition、Nightly、または ESR 版を使用し、署名検証を無効化してください。
+
+- **一時的なアドオンとして読み込む場合（通常版 Firefox）**:
+  1. アドレスバーに `about:debugging#/runtime/this-firefox` を入力して開きます。
+  2. **「一時的なアドオンを読み込む...」** をクリックします。
+  3. ダウンロードした Firefox 向けの ZIP アーカイブ（または解凍したフォルダー内の [dist/firefox/manifest.json](dist/firefox/manifest.json)）を選択します。
+  4. ツールバーに追加された RaptorQR アイコンをクリックして起動します。
+- **恒久的にインストールする場合（Firefox Developer Edition / Nightly / ESR）**:
+  1. `about:config` を開き、`xpinstall.signatures.required` を `false` に変更します。
+  2. `about:addons`（アドオンマネージャー）を開きます。
+  3. 歯車アイコンをクリックし、**「ファイルからアドオンをインストール...」** を選択します。
+  4. ダウンロードした Firefox 向けの ZIP アーカイブ（または拡張子を `.xpi` に変更したもの）を選択してインストールします。
 
 ### ビルド
 
