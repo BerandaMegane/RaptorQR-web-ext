@@ -2,6 +2,7 @@
   "name": "raptorqr-web-ext",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "prebuild": "node scripts/apply-raptorqr-extension-patch.mjs",

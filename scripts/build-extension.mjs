@@ -22,6 +22,8 @@ for (const target of targets) {
   await cp(upstreamDistDir, resolve(targetDir, 'app'), { recursive: true });
   await cp(resolve(rootDir, 'extension/background.js'), resolve(targetDir, 'background.js'));
   await cp(resolve(rootDir, 'assets/icons'), resolve(targetDir, 'icons'), { recursive: true });
+  await cp(resolve(rootDir, 'LICENSE'), resolve(targetDir, 'LICENSE'));
+  await cp(resolve(rootDir, 'LICENSES'), resolve(targetDir, 'LICENSES'), { recursive: true });
   await buildManifest(target, resolve(targetDir, 'manifest.json'));
   verifyTarget(targetDir);
 }
@@ -38,6 +40,11 @@ function verifyTarget(targetDir) {
     'icons/icon-32.png',
     'icons/icon-48.png',
     'icons/icon-128.png',
+    'LICENSE',
+    'LICENSES/RaptorQR-MIT.txt',
+    'LICENSES/Apache-2.0.txt',
+    'LICENSES/MIT-DEPENDENCIES.txt',
+    'LICENSES/fast_qr-MIT.txt',
   ]) {
     if (!existsSync(resolve(targetDir, requiredPath))) {
       throw new Error(`Extension output is missing ${requiredPath}.`);

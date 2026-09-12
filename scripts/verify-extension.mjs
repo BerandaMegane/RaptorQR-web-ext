@@ -30,6 +30,11 @@ async function verifyTarget(target, targetDir) {
   );
   requireValue(!('permissions' in manifest), `${target}: permissions must not be requested.`);
   requireValue(!('host_permissions' in manifest), `${target}: host_permissions must not be requested.`);
+  requireFile(relativeFiles, 'LICENSE', `${target}: extension license`);
+  requireFile(relativeFiles, 'LICENSES/RaptorQR-MIT.txt', `${target}: RaptorQR license notice`);
+  requireFile(relativeFiles, 'LICENSES/Apache-2.0.txt', `${target}: Apache 2.0 license notice`);
+  requireFile(relativeFiles, 'LICENSES/MIT-DEPENDENCIES.txt', `${target}: bundled MIT dependency notices`);
+  requireFile(relativeFiles, 'LICENSES/fast_qr-MIT.txt', `${target}: fast_qr license notice`);
 
   for (const iconPath of Object.values(manifest.icons ?? {})) {
     requireValue(typeof iconPath === 'string', `${target}: icon path is invalid.`);
