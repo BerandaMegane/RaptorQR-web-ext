@@ -217,7 +217,7 @@ plan.md の 3.X に基づいて実装して。実装中に問題や疑問が発�
 
 1. `vendor/RaptorQR` で `pnpm install --frozen-lockfile` を実行する。
 2. 拡張機能用 build flag を指定して `pnpm build` を実行する。
-3. `apps/web/dist` に HTML、JavaScript、CSS、worker、Fast QR、RaptorQ、ZXing reader、ZXing writer の WASM が配置されていることを確認する。
+3. `apps/web/dist` に HTML、JavaScript、worker、Fast QR、RaptorQ、ZXing reader、ZXing writer の WASM が配置されていることを確認する。CSS は upstream が独立した CSS を生成する場合にのみ確認する（現行 UI は主にインラインスタイルを使用する）。
 4. RaptorQR が同梱 WASM を選択し、外部 CDN へ実通信しないことを確認する。
 
 完了条件: upstream build が成功し、PWA を除外した Web アプリの全実行時資産がローカルに揃う。

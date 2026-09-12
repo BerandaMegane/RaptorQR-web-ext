@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "prebuild": "node scripts/apply-raptorqr-extension-patch.mjs",
+    "build:upstream": "node scripts/build-raptorqr-web.mjs",
+    "verify:upstream": "node scripts/build-raptorqr-web.mjs --verify-only",
     "build": "node scripts/build-extension.mjs",
     "verify": "node scripts/verify-extension.mjs",
     "package:firefox": "node scripts/package-xpi.mjs"
