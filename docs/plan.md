@@ -127,8 +127,10 @@ RaptorQR の WASM は拡張機能ページ内でコンパイルするため、CS
 Firefox 用 Manifest には、署名済み Manifest V3 拡張機能に必要な Gecko 固有設定を追加する。
 
 - `browser_specific_settings.gecko.id`
-- `browser_specific_settings.gecko.strict_min_version`
+- `browser_specific_settings.gecko.strict_min_version: "142.0"`
 - `browser_specific_settings.gecko.data_collection_permissions.required: ["none"]`
+
+Firefox 用成果物では、未対応の `background.service_worker` を出力せず、`background.scripts: ["background.js"]` を使用する。`data_collection_permissions` をデスクトップと Android の両方で利用するため、Firefox の最低バージョンはこのキーをサポートする 142.0 とする。
 
 Chrome/Edge 用と Firefox 用の差分は `scripts/build-manifest.mjs` で生成し、共通部分を二重管理しない。
 
@@ -271,6 +273,8 @@ stable 版の Chrome/Edge は、バージョンや組織設定によって comma
 2. `dist/firefox` を Firefox の temporary add-on として読み込み、Chromium 系と同じ機能とオフライン動作を確認する。
 3. `scripts/package-xpi.mjs` で開発用 XPI を作成する。
 4. 配布が必要になった時点で、AMO の Secret を利用して `web-ext sign` による署名済み XPI を作成する。
+
+`pnpm lint:firefox` で Firefox 用成果物を検証し、`pnpm package:firefox` で `dist/firefox-artifacts/raptorqr-web-ext-dev.xpi` を生成する。temporary add-on は `pnpm run:firefox` で起動でき、`FIREFOX_PATH` に実行ファイルを指定して別環境にも対応する。Microsoft Store 版 Firefox 154.0.1 では、既定の `C:/Program Files/WindowsApps/Mozilla.Firefox_154.0.1.0_x64__n80bbvh6b1yt2/VFS/ProgramFiles/Firefox Package Root/firefox.exe` を利用して temporary add-on のインストールを確認した。現時点の `web-ext lint` 警告は、upstream の minify 済み UI bundle における `innerHTML` 使用だけである。
 
 完了条件: Firefox の temporary add-on として動作し、開発用 XPI が生成できる。通常版 Firefox 向け配布物は署名済み XPI とする。
 

@@ -11,10 +11,12 @@ export async function buildManifest(target, outputPath) {
   ));
 
   if (target === 'firefox') {
+    delete manifest.background.service_worker;
+    manifest.background.scripts = ['background.js'];
     manifest.browser_specific_settings = {
       gecko: {
         id: 'raptorqr-web-ext@example.invalid',
-        strict_min_version: '121.0',
+        strict_min_version: '142.0',
         data_collection_permissions: {
           required: ['none'],
         },

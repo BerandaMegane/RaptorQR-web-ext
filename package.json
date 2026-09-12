@@ -11,10 +11,13 @@
     "build": "node scripts/build-extension.mjs",
     "verify": "node scripts/verify-extension.mjs",
     "verify:chromium": "node scripts/verify-chromium-browsers.mjs",
+    "lint:firefox": "web-ext lint --source-dir dist/firefox",
+    "run:firefox": "node scripts/run-firefox.mjs",
     "package:firefox": "node scripts/package-xpi.mjs"
   },
   "devDependencies": {
     "playwright-core": "^1.63.0",
-    "sharp": "^0.35.4"
+    "sharp": "^0.35.4",
+    "web-ext": "^10.6.0"
   }
 }

@@ -24,7 +24,6 @@ async function verifyTarget(target, targetDir) {
   requireValue(typeof manifest.name === 'string' && manifest.name.length > 0, `${target}: name is required.`);
   requireValue(typeof manifest.version === 'string' && manifest.version.length > 0, `${target}: version is required.`);
   requireValue(typeof manifest.action?.default_title === 'string', `${target}: action.default_title is required.`);
-  requireValue(manifest.background?.service_worker === 'background.js', `${target}: background service worker is invalid.`);
   requireValue(
     manifest.content_security_policy?.extension_pages === "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'",
     `${target}: extension page CSP must allow only local scripts and WebAssembly compilation.`,
@@ -32,20 +31,28 @@ async function verifyTarget(target, targetDir) {
   requireValue(!('permissions' in manifest), `${target}: permissions must not be requested.`);
   requireValue(!('host_permissions' in manifest), `${target}: host_permissions must not be requested.`);
 
-  requireFile(relativeFiles, manifest.background.service_worker, `${target}: background service worker`);
   for (const iconPath of Object.values(manifest.icons ?? {})) {
     requireValue(typeof iconPath === 'string', `${target}: icon path is invalid.`);
     requireFile(relativeFiles, iconPath, `${target}: icon`);
   }
 
   if (target === 'firefox') {
+    requireValue(!('service_worker' in manifest.background), `${target}: Chromium-only background service worker is not allowed.`);
+    requireValue(
+      JSON.stringify(manifest.background?.scripts) === '["background.js"]',
+      `${target}: Firefox background script fallback is required.`,
+    );
+    requireFile(relativeFiles, manifest.background.scripts[0], `${target}: background script`);
     requireValue(typeof manifest.browser_specific_settings?.gecko?.id === 'string', `${target}: Gecko ID is required.`);
-    requireValue(typeof manifest.browser_specific_settings?.gecko?.strict_min_version === 'string', `${target}: Gecko minimum version is required.`);
+    requireValue(manifest.browser_specific_settings?.gecko?.strict_min_version === '142.0', `${target}: Gecko minimum version must support the declared data collection setting.`);
     requireValue(
       JSON.stringify(manifest.browser_specific_settings?.gecko?.data_collection_permissions?.required) === '["none"]',
       `${target}: Gecko data collection declaration is invalid.`,
     );
   } else {
+    requireValue(manifest.background?.service_worker === 'background.js', `${target}: background service worker is invalid.`);
+    requireFile(relativeFiles, manifest.background.service_worker, `${target}: background service worker`);
+    requireValue(!('scripts' in manifest.background), `${target}: Firefox-only background script fallback is not allowed.`);
     requireValue(!('browser_specific_settings' in manifest), `${target}: Firefox-only settings are not allowed.`);
   }
 
